@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{% if article is null %}
+    ERROR 404
+{% else %}
+{{ article.title }}
+{% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if article is null %}
+        <p>L'article n'existe pas !</p>
+        <br>
+        <a href="/article/all">Retour</a>
+    {% else %}
+    <article class="fullpage">
+        <div>
+            <h2>{{ article.title|capitalize }}</h2>
+            <a href="/article/all" id="back">Retour</a>
+        </div>
+        <p>{{ article.content }}</p>
+        <br>
+        <p>Date de parution : {{ article.creationdate|date("M") }} {{ article.creationdate|date("d")  }}</p>
+        <br>
+        <p>Rédigé par : {{ article.user }}</p>
+    </article>
+    {% endif %}
+{% endblock %}

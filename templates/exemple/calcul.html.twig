@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calcul de fou!{% endblock %}
+
+{% block body %}
+{% if op == '+' %}
+    {% set resultat = nbr1 + nbr2 %}
+    {% set operation = 'addition' %}
+    {% else %}
+        {% if op == '-' %}
+            {% set resultat = nbr1 - nbr2 %}
+            {% set operation = 'soustraction' %}
+            {% else %}
+                {% if op == 'par' %}
+                    {% set resultat = nbr1 / nbr2 %}
+                    {% set operation = 'division' %}
+                    {% set op = '/' %}
+                    {% else %}
+                        {% if op == '*' %}
+                            {% set resultat = nbr1 * nbr2 %}
+                            {% set operation = 'multiplication' %}
+                        {% endif %}
+                {% endif %}
+        {% endif %}
+{% endif %}
+<h1> {{ nbr1 }} {{ op }} {{ nbr2 }} </h1>
+<h2>Le résultat de cette {{ operation }} est égal à {{ resultat }}</h2>
+{% endblock %}

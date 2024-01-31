@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les articles{% endblock %}
+
+{% block body %}
+    {% for article in articles %}
+        <article class="box">
+            <p id="cat">
+                {% for cat in article.categories %}
+                    {{ cat.name|upper }}
+                {% endfor %}
+            </p>
+            <a href="/article/id/{{ article.id }}"><h3>{{ article.title|capitalize }}</h3></a>
+            <p>{{ article.content }}</p>
+            <p>Date de parution : {{ article.creationdate|date("M") }} {{ article.creationdate|date("d")  }}</p>
+            <p>Rédigé par : {{ article.user }}</p>
+            
+        </article>
+        <br>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'utilisateur{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_label(form.firstname) }}
+    {{ form_widget(form.firstname) }}
+    {{ form_label(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+    {{ form_row(widget.password) }}
+{{ form_rest(form) }}
+{{ form_end(form) }}
+{% endblock %}
