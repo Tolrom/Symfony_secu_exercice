@@ -3,7 +3,8 @@
 {% block title %}Ajouter une catégorie{% endblock %}
 
 {% block body %}
-    {{ form_start(formulaire) }}
-    {{ form_end(formulaire) }}
+{% include('navbar.html.twig') %}
+    {{ form_start(form) }}
+    {{ form_end(form) }}
     <p>{{ message }}</p>
 {% endblock %}

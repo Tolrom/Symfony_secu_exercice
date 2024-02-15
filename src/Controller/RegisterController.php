@@ -15,31 +15,50 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class RegisterController extends AbstractController
 {
     #[Route('/register/add', name: 'app_register_add')]
-    public function addUser(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em): Response
+    public function addUser(Request $request, EntityManagerInterface $em): Response
     {
         $message = '';
         $user = new User();
-        $type = 'success';
-        $msg = 'Le compte a été ajouté en BDD!';
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() AND $form->isValid()) {
-            $password = $user->getPassword();
-            $hash = $hasher->hashPassword($user, $password);
-            $user->setPassword($hash);
+            // $password = $user->getPassword();
+            // dd($password);
+            // $hash = $hasher->hashPassword($user, $password);
+            // $user->setPassword($hash);
             // Version en une ligne
             // $user->setPassword($hasher->hashPassword($user, $user->getpassword()));
             $user ->setRoles(['ROLE_USER','ROLE_ADMIN']);
             $em->persist($user);
             $em->flush();
+            $message = 'Le compte a été ajouté en BDD!';
         }
         else{
-            $type = 'danger';
-            $msg = 'Informations incorrectes.';
+            $message = 'Informations incorrectes.';
         }
-        $this->addFlash($type, $message);
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
+            'message' => $message,
+        ]);
+    }
+    #[Route('/register/update/', name: 'app_register_update')]
+    public function updateUser(Request $request, EntityManagerInterface $em): Response
+    {
+        $message = '';
+        $user = $this->getUser();
+        $form = $this->createForm(RegisterType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() AND $form->isValid()) {
+            $em->persist($user);
+            $em->flush();
+            $message = 'Le compte a bien été modifié en BDD!';
+        }
+        else{
+            $message = 'Informations incorrectes.';
+        }
+        return $this->render('register/index.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message,
         ]);
     }
 }

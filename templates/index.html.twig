@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles à gogo{% endblock %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+    <h1>
+        Articles à Gogo !
+    </h1>
+    <article id="fullpage" class="meteo">
+        <p>
+        {{ norris.value }}  
+        </p>
+        <img src="{{ waifu.images[0].url }}" alt="Une waifu" id="waifu" >
+    </article>
+{% endblock %}

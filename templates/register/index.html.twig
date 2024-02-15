@@ -3,6 +3,7 @@
 {% block title %}Ajout d'utilisateur{% endblock %}
 
 {% block body %}
+{% include('navbar.html.twig') %}
 {{ form_start(form) }}
     {{ form_label(form.email) }}
     {{ form_widget(form.email) }}
@@ -10,7 +11,10 @@
     {{ form_widget(form.firstname) }}
     {{ form_label(form.lastname) }}
     {{ form_widget(form.lastname) }}
-    {{ form_row(widget.password) }}
+    {{ form_label(form.password.first) }}
+    {{ form_widget(form.password.first) }}
+    {{ form_label(form.password.second) }}
+    {{ form_widget(form.password.second) }}
 {{ form_rest(form) }}
 {{ form_end(form) }}
 {% endblock %}

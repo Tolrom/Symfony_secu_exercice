@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un article{% endblock %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+{{ form_start(form, {'attr': {'id': 'formAdd'}}) }}
+    {% do form.creationDate.setRendered() %}
+    {% do form.user.setRendered() %}
+    {{ form_label(form.title) }}
+    {{ form_widget(form.title) }}
+    {{ form_label(form.content) }}
+    {{ form_widget(form.content) }}
+    {{ form_label(form.categories) }}
+    {{ form_widget(form.categories) }}
+{{ form_rest(form) }}
+{{ form_end(form) }}
+    <p>{{ message }}</p>
+{% endblock %}

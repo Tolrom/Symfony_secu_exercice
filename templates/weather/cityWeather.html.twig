@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Meteo ciblée{% endblock %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+{{ form_start(form, {'attr': {'id': 'formAdd'}}) }}
+    {{ form_label(form.city) }}
+    {{ form_widget(form.city) }}
+{{ form_rest(form) }}
+{{ form_end(form) }}
+    <p>{{ message }}</p>
+{% if weather.cod is defined and weather.name is defined %}
+    <article id="fullpage" class="meteo">
+        <h1>{{ weather.name }}</h1>
+        <h2>
+            {{ weather.main.temp|round(1) }} °C
+        </h2>
+        <h4>
+            Ressenti :
+            {{ weather.main.feels_like|round(1) }} °C
+        </h4>
+        <h4>
+            Humidité :
+            {{ weather.main.humidity }} %
+        </h4>
+        <p>
+            {{ weather.weather[0].description|capitalize }}
+            <img src="http://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" alt="">
+        </p>
+    </article>
+{% elseif weather.cod is defined %}
+    {% if weather.cod == 400 %}
+        <article id="fullpage" class="meteo" >
+            <p>Erreur {{ weather.cod }} : Aucune ville renseignée.</p>
+        </article>
+    {% elseif weather.cod == 404 %}
+        <article id="fullpage" class="meteo" >
+            <p>Erreur {{ weather.cod }} : Ville introuvable.</p>
+        </article>
+    {% endif %}
+    
+
+{% endif %}
+
+
+{% endblock %}

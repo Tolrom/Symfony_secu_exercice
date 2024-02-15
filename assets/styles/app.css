@@ -17,8 +17,16 @@ h2 {
 }
 body {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: stretch;
+    align-content: stretch;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+textarea {
+    height: 25vh;
+    width: 25vw;
 }
 article {
     border-radius: 15px;
@@ -34,6 +42,28 @@ article h3 {
     margin-bottom: 5%;
     color: red;
 }
+button[type=submit] {
+    width: 100%;
+    height: 5vh;
+    background-color: #0060aa;
+    border: 0;
+    color: azure;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: large;
+}
+#article_Ajouter:active {
+    background-color: #2080aa;
+}
+#article_Ajouter:hover {
+    box-shadow: inset 5px 5px 2px 0px rgba(0,0,0,0.2);
+}
+#article_categories {
+    height: 15vh;
+}
+#article_categories option {
+    margin: 5px;
+}
 #cat {
     font-weight: bolder;
     color: #0060aa;
@@ -41,19 +71,37 @@ article h3 {
 .box {
     max-width: 27%;
 }
+.box p:last-child {
+    display: flex;
+    align-items: center;
+}
+.box p img {
+    height: 3em;
+    width: 3em;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 1em;
+}
 .fullpage{
+    position: relative;
     max-width: 80%;
     height: 80%;
 }
 #back {
-    float: right;
-    margin-top: -5%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 1em;
 }
 form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: stretch;
 }
+/* #formAdd {
+    align-items: stretch;
+} */
 form * {
     margin-bottom: 5px;
 }
@@ -65,4 +113,120 @@ form * {
 #register_password div {
     display: flex;
     justify-content: space-between;
+}
+main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+nav {
+    display: flex;
+    align-items: center;
+    background-color: #2dafeb;
+    padding: 1%;
+}
+nav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    color: aliceblue;
+    font-size: large;
+    font-weight: bold;
+}
+li {
+    list-style-type: none;
+    display: inline;
+}
+header {
+    margin-bottom: 3%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+header a {
+    display: inline;
+    color: aliceblue;
+}
+li a:hover {
+    color: #151515;
+}
+header,
+nav,
+ul {
+    width: 100%;
+}
+h1 {
+    width: 100vw;
+    text-align: center;
+    font-size: 4em;
+}
+#add {
+    display: flex;
+    flex-wrap: nowrap;
+    align-self: flex-start;
+    align-items: center;
+    margin-left: 5%;
+    color: black;
+    font-size: large;
+    font-weight: bold;
+}
+a img {
+   height: 1em;
+   margin-right: 0.2em;
+}
+.box {
+    position: relative;
+}
+.box a {
+    color: black;
+}
+.box a:hover {
+    color: #2dafeb;
+}
+#edit {
+    /* align-self: flex-end; */
+    position: absolute;
+    top: 2em;
+    right: 2em;
+}
+section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#userInfos {
+    position: relative;
+    align-self: center;
+}
+#userInfos ul{
+    display: flex;
+    flex-direction: column;
+}
+#userInfos ul li {
+    margin: 1em 0;
+}
+
+.meteo {
+    align-items: center;
+}
+.meteo p {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    font-size: x-large;
+}
+.meteo h1 {
+    width: auto;
+}
+.meteo p img {
+    border-radius: 10px;
+    background-color: rgba(144, 211, 255, 0.8);
+    margin: 1em;
+}
+#waifu {
+    max-width: 50%; 
+    align-self: center;  
+    margin-top: 5%;
 }

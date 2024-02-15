@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+<main>
+    <section>
+        <article id="userInfos">
+        <a id="edit" href="/register/update"><img class="icon" src="/images/pencil.svg"></a>
+            <ul>
+                <li><b>Prénom : </b>{{ app.user.firstname }}</li>
+                <li><b>Nom : </b>{{ app.user.lastname }}</li>
+                <li><b>Email : </b>{{ app.user.email }}</li>
+                <li><b>Droits admin :</b>
+                {% if app.user.roles[1] %}
+                    Oui
+                {% else %}
+                    Non
+                {% endif %}
+                </li>
+            </ul>
+        </article>
+    </section>
+</main>
+{% endblock %}

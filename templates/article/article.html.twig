@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block body %}
+{% include('navbar.html.twig') %}
+<main>
     {% if article is null %}
         <p>L'article n'existe pas !</p>
         <br>
@@ -26,4 +28,5 @@
         <p>Rédigé par : {{ article.user }}</p>
     </article>
     {% endif %}
+</main>
 {% endblock %}

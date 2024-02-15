@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les catégories{% endblock %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+<a href="/category/add" id="add"><img src="/images/plus.svg"> Ajouter une catégorie</a>
+    <main>
+    {% for cat in categories %}
+        <article class="box">
+            <a href="/category/{{ cat.id }}"><p>{{ cat.name|capitalize }}</p></a>
+        </article>
+        <br>
+    {% endfor %}
+    </main>
+{% endblock %}

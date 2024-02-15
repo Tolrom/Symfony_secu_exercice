@@ -3,19 +3,33 @@
 {% block title %}Tous les articles{% endblock %}
 
 {% block body %}
+{% include('navbar.html.twig') %}
+<a href="/article/add" id="add"><img src="/images/plus.svg"> Ajouter un article</a>
+    <main>
     {% for article in articles %}
         <article class="box">
+            {% if app.user and app.user.id == article.user.id %}    
+            <a id="edit" href="/article/update/{{ article.id }}"><img class="icon" src="/images/pencil.svg"></a>
+            {% endif %}
             <p id="cat">
                 {% for cat in article.categories %}
-                    {{ cat.name|upper }}
+                    {{ cat.name|capitalize }}
                 {% endfor %}
             </p>
             <a href="/article/id/{{ article.id }}"><h3>{{ article.title|capitalize }}</h3></a>
             <p>{{ article.content }}</p>
             <p>Date de parution : {{ article.creationdate|date("M") }} {{ article.creationdate|date("d")  }}</p>
-            <p>Rédigé par : {{ article.user }}</p>
+            <p>Rédigé par : {{ article.user }}
+                {% if article.user.img %}
+                    <img src="/images/{{ article.user.img }}" alt="">
+                {% else %}
+                    <img src="/images/default.jpg" alt="">
+                {% endif %}
+                
+            </p>
             
         </article>
         <br>
     {% endfor %}
+    </main>
 {% endblock %}

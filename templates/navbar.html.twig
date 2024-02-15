@@ -1,0 +1,46 @@
+<header>
+    <nav>
+    {% if app.user %}
+    <a href="/user/" >
+        {{ app.user }}
+    </a>
+    {% endif %}
+        <ul>
+            <li>
+                <a href="/feur">Quoi??</a>
+            </li>
+            <li>
+                <a href="/weather">Meteo d'ici</a>
+            </li>
+            <li>
+                <a href="/weather/city">Meteo d'ailleurs</a>
+            </li>
+            <li>
+                <a href="/">Accueil</a>
+            </li>
+            <li>
+                <a href="/article/all">Les articles</a>
+            </li>
+            <li>
+                <a href="/category/all">Les catégories</a>
+            </li>
+            {% if app.user %}
+            <li>
+                <a href="/logout">Se déconnecter</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/login">Se connecter</a>
+            </li>
+            <li>
+                <a href="/register/add">S'inscrire</a>
+            </li>
+    {% endif %}
+    {% if app.user and app.user.roles[1] %}
+        <li>
+            <a href="/enigma">Admin</a>
+        </li>
+    {% endif %}
+        </ul>
+    </nav>
+</header>

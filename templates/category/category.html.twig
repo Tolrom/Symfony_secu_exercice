@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{% if category is null %}
+    ERROR 404
+{% else %}
+{{ category.name }}
+{% endif %}
+{% endblock %}
+
+{% block body %}
+{% include('navbar.html.twig') %}
+<main>
+    {% if category is null %}
+    <article class="fullpage">
+        <p>La catégorie n'existe pas !</p>
+        <br>
+        <a href="/category/all">Retour</a>
+    </article>
+    {% else %}
+    <article class="fullpage">
+        <div>
+            <h2>{{ category.name|capitalize }}</h2>
+            <a href="/category/all" id="back">Retour</a>
+        </div>
+        <p>ID : {{ category.id }}</p>
+    </article>
+    {% endif %}
+</main>
+{% endblock %}
