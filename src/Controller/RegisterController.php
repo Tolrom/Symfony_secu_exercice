@@ -35,51 +35,56 @@ class RegisterController extends AbstractController
     #[Route('/register/add', name: 'app_register_add')]
     public function addUser(Request $request, UserPasswordHasherInterface $hasher): Response
     {
-        $message = '';
-        $user = new User();
-        $form = $this->createForm(RegisterType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() AND $form->isValid()) {
-            // dd($request->get('register'));
-            $email = UtilsService::cleanInputs($request->get('register')['email']);
-            $firstname = UtilsService::cleanInputs($request->get('register')['firstname']);
-            $lastname = UtilsService::cleanInputs($request->get('register')['lastname']);
-            $pass = UtilsService::cleanInputs($request->get('register')['password']['first']);
-            // dd($email, $firstname, $lastname, $pass, isset($email));
-            if(isset($email) and isset($firstname) and isset($lastname) and isset($pass)) {
-                if(UtilsService::testRegex($email, $this->getParameter('regex_mail'))){
-                    if(UtilsService::testRegex($pass, $this->getParameter('regex_password'))){
-                        if(!$this->registerService->getUserByMail($email)){
-                            $user->setIsActivated(false);
-                            $user->setRoles(["ROLE_USER"]);
-                            $user->setPassword($this->hash->hashPassword($user, $pass));
-                            $user->setEmail($email);
-                            $user->setFirstname($firstname);
-                            $user->setLastname($lastname);
-                            $this->em->persist($user);
-                            $this->em->flush();
-                            $this->emailService->sendEmail($email, 'validation', 'Pour valider votre compte, cliquez sur <a href="http://localhost:8000/register/activate/'.$user->getId().'">ce lien</a>');
-                            $message = "Un lien de validation vient de vous être envoyé par mail.";
+        try {
+            $message = '';
+            $type = 'warning';
+            $user = new User();
+            $form = $this->createForm(RegisterType::class, $user);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() AND $form->isValid()) {
+                // dd($request->get('register'));
+                $email = UtilsService::cleanInputs($request->get('register')['email']);
+                $firstname = UtilsService::cleanInputs($request->get('register')['firstname']);
+                $lastname = UtilsService::cleanInputs($request->get('register')['lastname']);
+                $pass = UtilsService::cleanInputs($request->get('register')['password']['first']);
+                // dd($email, $firstname, $lastname, $pass, isset($email));
+                if($email!='' and $firstname!='' and $lastname!='' and $pass!='') {
+                    if(UtilsService::testRegex($email, $this->getParameter('regex_mail'))){
+                        if(UtilsService::testRegex($pass, $this->getParameter('regex_password'))){
+                            if(!$this->registerService->getUserByMail($email)){
+                                $user->setIsActivated(false);
+                                $user->setRoles(["ROLE_USER"]);
+                                $user->setPassword($this->hash->hashPassword($user, $pass));
+                                $user->setEmail($email);
+                                $user->setFirstname($firstname);
+                                $user->setLastname($lastname);
+                                $this->em->persist($user);
+                                $this->em->flush();
+                                $this->emailService->sendEmail($email, 'validation', 'Pour valider votre compte, cliquez sur <a href="http://localhost:8000/register/activate/'.$user->getId().'">ce lien</a>');
+                                $message = "Un lien de validation vient de vous être envoyé par mail.";
+                                $type = 'success';
+                            }
+                            else {
+                                $message = "Cette adresse email est déjà associée à un compte dans la BDD.";
+                                $type = "danger";
+                            }
                         }
                         else {
-                            $message = "Cette adresse email est déjà associée à un compte dans la BDD.";
+                            $message = "Le mot de passe n'est pas conforme, il doit comporter une minuscule, une majuscule, un chiffre et plus de 12 caractères.";
                         }
                     }
                     else {
-                        $message = "Le mot de passe n'est pas conforme, il doit comporter une minuscule, une majuscule, un chiffre et plus de 12 caractères.";
+                        $message = "L'adresse email n'est pas conforme";
                     }
                 }
                 else {
-                    $message = "L'adresse email n'est pas conforme";
+                    $message = "Les champs ne sont pas tous remplis";
                 }
+                $this->addFlash($type, $message);
             }
-            else {
-                $message = "Les champs ne sont pas tous remplis";
+            } catch (\Exception $e) {
+                $this->addFlash('danger', $e->getMessage());
             }
-        }
-        else{
-            $message = 'Informations incorrectes.';
-        }
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
             'message' => $message,

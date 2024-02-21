@@ -16,7 +16,7 @@
     {{ form_label(form.password.second) }}
     {{ form_widget(form.password.second) }}
     {{ form_errors(form.password.first) }}
-    <p>{{ message }}</p>
 {{ form_rest(form) }}
 {{ form_end(form) }}
+{% include "_toast.html.twig" %}
 {% endblock %}
